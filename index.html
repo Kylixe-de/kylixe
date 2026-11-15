@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
+<meta name="kylixe-build" content="draw-anim-v3">
 <meta charset="utf-8">
 <script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -684,7 +685,7 @@ setLang(document.documentElement.lang);route();
  Promise.all([get("site"),get("categories"),get("products")]).then(function(a){return{site:a[0],categories:a[1],products:a[2]}}).catch(function(){return fb}).then(function(D){
   var ic=(D.categories||[]).map(function(c){return String(c.image||"").replace(/^\.?\/+/,"")}).filter(function(i){return /\.svg$/i.test(i)});
   window.SVGTXT={};
-  return Promise.all(ic.map(function(i){return fetch(i).then(function(r){return r.ok?r.text():""}).then(function(t){if(t&&t.indexOf("<svg")>-1)SVGTXT[i]=t}).catch(function(){})})).then(function(){return D});
+  return Promise.all(ic.map(function(i){return fetch(i,{cache:"no-cache"}).then(function(r){return r.ok?r.text():""}).then(function(t){if(t&&t.indexOf("<svg")>-1)SVGTXT[i]=t}).catch(function(){})})).then(function(){return D});
  }).then(function(D){
   window.DATA=D;var s=document.createElement("script");s.textContent=document.getElementById("main-js").textContent;document.body.appendChild(s);
  });
