@@ -1,0 +1,83 @@
+{
+  "currency": "EUR",
+  "shipping_cost": 5.9,
+  "whatsapp": "",
+  "hero_images": [
+    {
+      "image": "images/hero/hero-1.webp",
+      "position": "right"
+    },
+    {
+      "image": "images/hero/hero-2.webp",
+      "position": "right"
+    },
+    {
+      "image": "images/hero/hero-3.webp",
+      "position": "center"
+    }
+  ],
+  "hero_seconds": 6.5,
+  "hero_subtitle": {
+    "en": "Unique & modern pottery, printed in clay layer by layer.",
+    "de": "Einzigartige, moderne Töpferware, Schicht für Schicht aus Ton gedruckt."
+  },
+  "categories_title": {
+    "en": "Our categories",
+    "de": "Unsere Kategorien"
+  },
+  "offer_enabled": true,
+  "offer_percent": 20,
+  "offer_label": {
+    "en": "Offer",
+    "de": "Rabatt"
+  },
+  "offer_items": [
+    {
+      "en": "On your first order",
+      "de": "Auf deine erste Bestellung"
+    },
+    {
+      "en": "Free gift wrapping",
+      "de": "Geschenkverpackung gratis"
+    },
+    {
+      "en": "Custom colours on request",
+      "de": "Wunschfarben auf Anfrage"
+    }
+  ],
+  "about_title": {
+    "en": "About us",
+    "de": "Über uns"
+  },
+  "about_text": {
+    "en": "We design our pieces digitally, print them in clay layer by layer, dry them slowly and fire them in the kiln. The fine print lines stay visible on every piece.",
+    "de": "Wir entwerfen unsere Stücke digital, drucken sie Schicht für Schicht aus Ton, trocknen sie langsam und brennen sie im Ofen. Die feinen Druckrillen bleiben auf jedem Stück sichtbar."
+  },
+  "contact_title": {
+    "en": "Contacts",
+    "de": "Kontakt"
+  },
+  "contact_text": {
+    "en": "Questions or a custom piece? Write to us.",
+    "de": "Fragen oder ein Wunschstück? Schreib uns."
+  },
+  "contact_button": {
+    "en": "Message us on WhatsApp",
+    "de": "Per WhatsApp schreiben"
+  },
+  "instagram_handle": "",
+  "instagram_posts": [],
+  "impressum": {
+    "name": "",
+    "representative": "",
+    "street": "",
+    "zip_city": "",
+    "country": "",
+    "email": "",
+    "phone": "",
+    "vat_id": "",
+    "w_id": "",
+    "court": "",
+    "reg_no": ""
+  }
+}

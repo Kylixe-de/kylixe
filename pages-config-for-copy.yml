@@ -1,0 +1,244 @@
+# Pages CMS configuration for the Kylixe site
+media:
+  input: images
+  output: /images
+  rename: safe
+  extensions: [png, jpg, jpeg, webp]
+
+content:
+  - name: products
+    label: "Products / Produkte"
+    type: file
+    path: data/products.json
+    format: json
+    list: true
+    fields:
+      - name: active
+        label: "Show on the site (turn off to hide)"
+        type: boolean
+        default: true
+      - name: name_en
+        label: "Name (English)"
+        type: string
+      - name: name_de
+        label: "Name (Deutsch)"
+        type: string
+      - name: category
+        label: "Category ID"
+        type: string
+        description: "The ID of a category, e.g. decor, plates, vases, cups, candle, planters (or one you added under Categories)."
+      - name: price
+        label: "Price in EUR"
+        type: number
+      - name: desc_en
+        label: "Description (English)"
+        type: text
+      - name: desc_de
+        label: "Description (Deutsch)"
+        type: text
+      - name: images
+        label: "Photos (the first one is the main photo, shown in the list)"
+        type: object
+        list: true
+        fields:
+          - name: src
+            label: "Photo"
+            type: image
+          - name: cutout
+            label: "Photo has a removed/transparent background (PNG or WebP)"
+            type: boolean
+            default: false
+      - name: height_cm
+        label: "Height in cm (0 = hide)"
+        type: number
+      - name: diameter_cm
+        label: "Diameter in cm (0 = hide)"
+        type: number
+      - name: payment_link
+        label: "Payment link (Stripe, Mollie, PayPal ...), optional"
+        type: string
+      - name: id
+        label: "ID (optional, leave empty and it is made from the name)"
+        type: string
+        description: "Letters, numbers and hyphens only. Do not change it after publishing."
+      - name: shape
+        label: "Drawn shape (only used when there are no photos)"
+        type: select
+        options:
+          values: [wave, tower, round, hour, pinch, cup, dish, pot, candle]
+      - name: colors
+        label: "Drawn colours (only used when there are no photos, up to 3)"
+        type: select
+        options:
+          multiple: true
+          max: 3
+          values: [cream, terracotta, sand, brown, sage, orange]
+
+  - name: categories
+    label: "Categories / Kategorien"
+    type: file
+    path: data/categories.json
+    format: json
+    list: true
+    fields:
+      - name: active
+        label: "Show on the site (turn off to hide the category and its products)"
+        type: boolean
+        default: true
+      - name: id
+        label: "ID"
+        type: string
+        description: "Letters, numbers and hyphens only (example: vases). Products use this ID."
+      - name: name_en
+        label: "Name (English)"
+        type: string
+      - name: name_de
+        label: "Name (Deutsch)"
+        type: string
+      - name: text_en
+        label: "Short text shown on hover (English)"
+        type: text
+      - name: text_de
+        label: "Short text shown on hover (Deutsch)"
+        type: text
+      - name: image
+        label: "Photo (optional, otherwise a drawn shape is used)"
+        type: image
+      - name: image_cutout
+        label: "Photo has a removed/transparent background"
+        type: boolean
+        default: true
+      - name: hover_image
+        label: "Photo shown on hover (optional)"
+        type: image
+      - name: shape
+        label: "Drawn shape (when there is no photo)"
+        type: select
+        options:
+          values: [wave, tower, round, hour, pinch, cup, dish, pot, candle]
+      - name: color
+        label: "Drawn colour"
+        type: select
+        options:
+          values: [cream, terracotta, sand, brown, sage, orange]
+      - name: hover_color
+        label: "Drawn colour on hover"
+        type: select
+        options:
+          values: [cream, terracotta, sand, brown, sage, orange]
+
+  - name: site
+    label: "Site settings / Seiteneinstellungen"
+    type: file
+    path: data/site.json
+    format: json
+    fields:
+      - name: hero_images
+        label: "Home page photos (up to 3, they change automatically)"
+        type: object
+        list: true
+        fields:
+          - name: image
+            label: "Photo"
+            type: image
+          - name: position
+            label: "Which part of the photo stays visible"
+            type: select
+            default: center
+            options:
+              values: [left, center, right]
+      - name: hero_seconds
+        label: "Seconds between photos"
+        type: number
+      - name: hero_subtitle
+        label: "Home: subtitle"
+        type: object
+        fields:
+          - {name: en, label: English, type: string}
+          - {name: de, label: Deutsch, type: string}
+      - name: categories_title
+        label: "Home: categories title"
+        type: object
+        fields:
+          - {name: en, label: English, type: string}
+          - {name: de, label: Deutsch, type: string}
+      - name: offer_enabled
+        label: "Show the offer section"
+        type: boolean
+      - name: offer_percent
+        label: "Offer percentage"
+        type: number
+      - name: offer_label
+        label: "Offer label"
+        type: object
+        fields:
+          - {name: en, label: English, type: string}
+          - {name: de, label: Deutsch, type: string}
+      - name: offer_items
+        label: "Offer points (up to 3)"
+        type: object
+        list: true
+        fields:
+          - {name: en, label: English, type: string}
+          - {name: de, label: Deutsch, type: string}
+      - name: about_title
+        label: "About: title"
+        type: object
+        fields:
+          - {name: en, label: English, type: string}
+          - {name: de, label: Deutsch, type: string}
+      - name: about_text
+        label: "About: text"
+        type: object
+        fields:
+          - {name: en, label: English, type: text}
+          - {name: de, label: Deutsch, type: text}
+      - name: contact_title
+        label: "Contact: title"
+        type: object
+        fields:
+          - {name: en, label: English, type: string}
+          - {name: de, label: Deutsch, type: string}
+      - name: contact_text
+        label: "Contact: text"
+        type: object
+        fields:
+          - {name: en, label: English, type: string}
+          - {name: de, label: Deutsch, type: string}
+      - name: contact_button
+        label: "Contact: button text"
+        type: object
+        fields:
+          - {name: en, label: English, type: string}
+          - {name: de, label: Deutsch, type: string}
+      - name: whatsapp
+        label: "WhatsApp number (international, digits only, e.g. 4915112345678)"
+        type: string
+      - name: instagram_handle
+        label: "Instagram name (without @)"
+        type: string
+      - name: instagram_posts
+        label: "Instagram post links (up to 6, e.g. https://www.instagram.com/p/ABC123/)"
+        type: string
+        list: true
+      - name: currency
+        label: "Currency code (EUR ...)"
+        type: string
+      - name: shipping_cost
+        label: "Shipping cost"
+        type: number
+      - name: impressum
+        label: "Impressum (legal notice). Write - if a field does not apply."
+        type: object
+        fields:
+          - {name: name, label: "Name or company incl. legal form", type: string}
+          - {name: representative, label: "Authorised representative (companies only)", type: string}
+          - {name: street, label: "Street and house number", type: string}
+          - {name: zip_city, label: "Postcode and city", type: string}
+          - {name: country, label: Country, type: string}
+          - {name: email, label: Email, type: string}
+          - {name: phone, label: Phone, type: string}
+          - {name: vat_id, label: "VAT ID (USt-IdNr.)", type: string}
+          - {name: w_id, label: "W-IdNr. (if available)", type: string}
+          - {name: court, label: "Register court (if registered)", type: string}
+          - {name: reg_no, label: "Register number (if registered)", type: string}
