@@ -169,6 +169,7 @@ function pair(label,path,area){var v=getp(S.site,path)||{};return '<div class="c
 function paneTexts(){
  var s=S.site,h='<h1>النصوص والعرض</h1><p class="sub">النصوص بالإنجليزي والألماني. التعديل بيظهر بعد الحفظ.</p>';
  h+=pair("الصفحة الأولى: الجملة تحت اللوغو","hero_subtitle")+pair("عنوان قسم الفئات","categories_title");
+ h+='<div class="card"><div class="row"><b class="grow">إخفاء كل المنتجات وإظهار "Coming soon" داخل كل فئة</b>'+sw("site.products_hidden",!!s.products_hidden)+'</div><p class="hint">المنتجات ما بتنحذف، بس بتختفي من الموقع لحد ما تطفي هالمفتاح.</p></div>';
  h+='<div class="card"><div class="row"><b class="grow">قسم العرض</b>'+sw("site.offer_enabled",s.offer_enabled!==false)+'</div><div style="margin-top:10px" class="two">'+field("النسبة %",inp("site.offer_percent",s.offer_percent,"number"))+'</div></div>';
  h+=pair("كلمة العرض (مثل Rabatt)","offer_label");
  s.offer_items=s.offer_items||[];for(var i=0;i<3;i++){s.offer_items[i]=s.offer_items[i]||{en:"",de:""};h+=pair("نقطة العرض "+(i+1)+" (اتركها فاضية لإخفائها)","offer_items."+i)}
@@ -199,6 +200,7 @@ function drawProd(){
  var d=ED.d,cats={};S.cats.forEach(function(c){cats[c.id]=(c.name_de||c.name_en||c.id)});if(d.category&&!cats[d.category])cats[d.category]=d.category;
  var h='<div class="hd"><h1>'+(ED.i<0?"منتج جديد":"تعديل المنتج")+'</h1><button type="button" class="btn ghost sm" data-act="dclose">إغلاق</button></div>'
  +'<div class="row" style="margin-bottom:12px"><b class="grow">إظهار المنتج بالموقع</b>'+sw("d.active",d.active!==false)+'</div>'
+ +'<div class="row" style="margin-bottom:12px"><b class="grow">قريباً (Coming soon) — بدل السعر وزر الشراء</b>'+sw("d.coming_soon",!!d.coming_soon)+'</div>'
  +'<div class="two">'+field("الاسم (Deutsch)",inp("d.name_de",d.name_de))+field("الاسم (English)",inp("d.name_en",d.name_en))+'</div>'
  +'<div class="two">'+field("الفئة",sel("d.category",d.category,cats))+field("السعر (€)",inp("d.price",d.price,"number"))+'</div>'
  +field("الوصف (Deutsch)",txt("d.desc_de",d.desc_de))+field("الوصف (English)",txt("d.desc_en",d.desc_en))
