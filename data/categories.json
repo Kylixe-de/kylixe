@@ -28,7 +28,7 @@
     "hover_image": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "vases",
     "name_en": "Vases",
     "name_de": "Vasen",
