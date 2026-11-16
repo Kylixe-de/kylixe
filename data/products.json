@@ -32,7 +32,7 @@
     "coming_soon": true
   },
   {
-    "active": true,
+    "active": false,
     "id": "wave",
     "category": "vases",
     "name_en": "Wave vase",
