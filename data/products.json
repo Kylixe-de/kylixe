@@ -28,11 +28,10 @@
     "colors": [
       "sage"
     ],
-    "payment_link": "https://buy.stripe.com/test_fZufZj1OkenNchf5POes000",
-    "coming_soon": true
+    "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "wave",
     "category": "vases",
     "name_en": "Wave vase",
@@ -52,7 +51,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "tower",
     "category": "vases",
     "name_en": "Tower vase",
@@ -72,7 +71,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "round",
     "category": "vases",
     "name_en": "Round vase",
@@ -92,7 +91,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "hour",
     "category": "vases",
     "name_en": "Hourglass vase",
@@ -112,7 +111,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "decor-wave",
     "category": "decor",
     "name_en": "Wave sculpture",
@@ -132,7 +131,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "decor-hour",
     "category": "decor",
     "name_en": "Layered ornament",
@@ -152,7 +151,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "decor-tower",
     "category": "decor",
     "name_en": "Tall column",
@@ -172,7 +171,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "plate-layer",
     "category": "plates",
     "name_en": "Layer plate",
@@ -192,7 +191,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "plate-small",
     "category": "plates",
     "name_en": "Small plate",
@@ -212,7 +211,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "plate-platter",
     "category": "plates",
     "name_en": "Serving platter",
@@ -232,7 +231,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "cup-pinch",
     "category": "cups",
     "name_en": "Pinch cup",
@@ -252,7 +251,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "cup-tall",
     "category": "cups",
     "name_en": "Tall cup",
@@ -272,7 +271,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "cup-small",
     "category": "cups",
     "name_en": "Espresso cup",
@@ -292,7 +291,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "candle-chalice",
     "category": "candle",
     "name_en": "Chalice holder",
@@ -312,7 +311,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "candle-tealight",
     "category": "candle",
     "name_en": "Tealight holder",
@@ -332,7 +331,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "candle-pillar",
     "category": "candle",
     "name_en": "Pillar candle holder",
@@ -352,7 +351,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "pot-cone",
     "category": "planters",
     "name_en": "Cone planter",
@@ -372,7 +371,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "pot-small",
     "category": "planters",
     "name_en": "Small pot",
@@ -392,7 +391,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "pot-large",
     "category": "planters",
     "name_en": "Large pot",

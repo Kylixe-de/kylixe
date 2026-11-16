@@ -25,7 +25,7 @@
     "en": "Our categories",
     "de": "Unsere Kategorien"
   },
-  "products_hidden": true,
+  "products_hidden": false,
   "offer_enabled": true,
   "offer_percent": 20,
   "offer_label": {

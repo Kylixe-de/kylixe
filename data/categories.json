@@ -1,6 +1,6 @@
 [
   {
-    "active": false,
+    "active": true,
     "id": "decor",
     "name_en": "Decor for home",
     "name_de": "Wohndeko",
@@ -14,7 +14,7 @@
     "hover_image": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "plates",
     "name_en": "Plates with design",
     "name_de": "Teller mit Design",
@@ -56,7 +56,7 @@
     "hover_image": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "candle",
     "name_en": "Candle holders",
     "name_de": "Kerzenhalter",
@@ -70,7 +70,7 @@
     "hover_image": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "planters",
     "name_en": "Planters",
     "name_de": "Pflanzgefäße",
