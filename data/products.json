@@ -51,7 +51,7 @@
     "payment_link": ""
   },
   {
-    "active": true,
+    "active": false,
     "id": "tower",
     "category": "vases",
     "name_en": "Tower vase",
