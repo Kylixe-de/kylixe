@@ -31,7 +31,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "wave",
     "category": "vases",
     "name_en": "Wave vase",
@@ -171,7 +171,7 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "plate-layer",
     "category": "plates",
     "name_en": "Layer plate",
