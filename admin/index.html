@@ -112,7 +112,7 @@ input:disabled{background:#e6dcc6!important;color:#9a927a!important;opacity:.6;c
 .ost .rst{color:var(--or);font-size:20px;letter-spacing:2px}
 .ost .rtx{margin:4px 0}
 .ost .tl{font-weight:700;margin-inline:6px}
-</style>
+.cgrp{margin:0 0 12px}.cgrp>summary{cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line,#ddd);border-radius:12px;list-style:none;font-size:16px;margin-bottom:8px}.cgrp>summary::-webkit-details-marker{display:none}.cgrp>summary::before{content:'\25B8';transition:transform .2s}.cgrp[open]>summary::before{transform:rotate(90deg)}.cgrp .cnt2{margin-inline-start:auto;opacity:.7;font-size:13px}</style>
 </head>
 <body>
 <div id="app"></div>
@@ -184,10 +184,15 @@ function pane(){
  var p=$("#pane"),f={prods:paneProds,cats:paneCats,hero:paneHero,texts:paneTexts,contact:paneContact,imp:paneImp,legal:paneLegal}[S.tab];p.innerHTML=f();
 }
 function catName(id){var c=(S.cats||[]).filter(function(x){return slug(x.id)===slug(id)})[0];return c?(c.name_de||c.name_en||c.id):id}
+document.addEventListener('toggle',function(e){var d=e.target;if(d&&d.classList&&d.classList.contains('cgrp')){window.OPENC=window.OPENC||{};window.OPENC[d.dataset.c]=d.open}},true);
 function paneProds(){
  var h='<h1>المنتجات</h1><p class="sub">اضغط على منتج لتعديله. المفتاح على اليمين بيظهر أو بيخفي المنتج بالموقع (متل الفئات). خيار Coming soon موجود داخل معلومات المنتج.</p><p><button class="btn" data-act="newprod">+ منتج جديد</button></p>';
  if(!S.prods.length)h+='<div class="card empty">ما في منتجات بعد.</div>';
- S.prods.forEach(function(p,i){var im=(p.images||[])[0],off=p.active===false,cs=!!p.coming_soon;h+='<div class="card prow'+(off?' off':'')+'" data-i="'+i+'"><div class="row"><span class="thumb'+(im&&im.cutout?' c':'')+'" style="'+(im?'background-image:url(\''+esc(imgUrl(im.src))+'\')':'')+'"></span><div class="grow" data-act="editprod" data-i="'+i+'" style="cursor:pointer"><div class="title">'+esc(p.name_de||p.name_en||"(بدون اسم)")+(off?'<span class="badge">مخفي</span>':'')+(cs?'<span class="badge soon">قريباً</span>':'')+'</div><div class="meta">'+'<bdi>'+esc(catName(p.category))+'</bdi> · <bdi>'+(cs?'Coming soon':esc(p.price)+' €')+'</bdi></div></div><span class="sw" title="إظهار بالموقع"><input type="checkbox" data-tog="prods" data-i="'+i+'"'+(off?'':' checked')+'><i></i></span></div><div class="pact"><button type="button" class="btn sm bad" data-act="pdel" data-i="'+i+'">حذف</button></div></div>'});
+ var rowH=function(p,i){var h=''; var im=(p.images||[])[0],off=p.active===false,cs=!!p.coming_soon;h+='<div class="card prow'+(off?' off':'')+'" data-i="'+i+'"><div class="row"><span class="thumb'+(im&&im.cutout?' c':'')+'" style="'+(im?'background-image:url(\''+esc(imgUrl(im.src))+'\')':'')+'"></span><div class="grow" data-act="editprod" data-i="'+i+'" style="cursor:pointer"><div class="title">'+esc(p.name_de||p.name_en||"(بدون اسم)")+(off?'<span class="badge">مخفي</span>':'')+(cs?'<span class="badge soon">قريباً</span>':'')+'</div><div class="meta">'+'<bdi>'+esc(catName(p.category))+'</bdi> · <bdi>'+(cs?'Coming soon':esc(p.price)+' €')+'</bdi></div></div><span class="sw" title="إظهار بالموقع"><input type="checkbox" data-tog="prods" data-i="'+i+'"'+(off?'':' checked')+'><i></i></span></div><div class="pact"><button type="button" class="btn sm bad" data-act="pdel" data-i="'+i+'">حذف</button></div></div>'; return h};
+ var groups={},order=[];(S.cats||[]).forEach(function(c){groups[slug(c.id)]=[];order.push(slug(c.id))});
+ S.prods.forEach(function(p,i){var k=slug(p.category);if(!groups[k]){groups[k]=[];order.push(k)}groups[k].push(i)});
+ window.OPENC=window.OPENC||{};
+ order.forEach(function(k){var ix=groups[k];if(!ix.length)return;h+='<details class="cgrp" data-c="'+esc(k)+'"'+(OPENC[k]?' open':'')+'><summary><b>'+esc(catName(k))+'</b><span class="cnt2">'+ix.length+'</span></summary>'+ix.map(function(i){return rowH(S.prods[i],i)}).join('')+'</details>'});
  return h;
 }
 function paneCats(){
@@ -203,6 +208,7 @@ function paneHero(){
  return h;
 }
 function pair(label,path,area){var v=getp(S.site,path)||{};return '<div class="card"><b>'+label+'</b><div class="two" style="margin-top:8px">'+field("English",(area?txt:inp)(("site."+path+".en"),v.en))+field("Deutsch",(area?txt:inp)(("site."+path+".de"),v.de))+'</div></div>'}
+FOOT=[["impressum","Impressum"],["datenschutz","Datenschutz"],["agb","AGB"],["widerruf","Widerruf"],["versand","Versand"]];
 function paneTexts(){
  var s=S.site,h='<h1>النصوص والعرض</h1><p class="sub">النصوص بالإنجليزي والألماني. التعديل بيظهر بعد الحفظ.</p>';
  h+=pair("الصفحة الأولى: الجملة تحت اللوغو","hero_subtitle")+pair("عنوان قسم الفئات","categories_title");
@@ -210,6 +216,7 @@ function paneTexts(){
  h+='<div class="card"><div class="row"><b class="grow">قسم العرض</b>'+sw("site.offer_enabled",s.offer_enabled!==false)+'</div><div style="margin-top:10px" class="two">'+field("النسبة %",inp("site.offer_percent",s.offer_percent,"number"))+'</div></div>';
  h+=pair("كلمة العرض (مثل Rabatt)","offer_label");
  s.offer_items=s.offer_items||[];for(var i=0;i<3;i++){s.offer_items[i]=s.offer_items[i]||{en:"",de:""};h+=pair("نقطة العرض "+(i+1)+" (اتركها فاضية لإخفائها)","offer_items."+i)}
+ h+='<h2 style="margin:22px 0 4px">روابط أسفل الصفحة</h2><p class="sub">غيّر اسم كل رابط. إذا تركته فاضي بيرجع للاسم الافتراضي.</p>'+FOOT.map(function(f){return pair("رابط: "+f[1],"footer_links."+f[0])}).join("");
  h+=pair("من نحن: العنوان","about_title")+pair("من نحن: النص","about_text",1)+pair("التواصل: العنوان","contact_title")+pair("التواصل: النص","contact_text")+pair("التواصل: نص الزر","contact_button");
  return h;
 }
