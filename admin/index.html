@@ -166,7 +166,7 @@ function pickImage(folder,base,cb){
 }
 
 /* ---------- rendering ---------- */
-var TABS=[["prods","المنتجات"],["cats","الفئات"],["hero","صور الصفحة الأولى"],["texts","النصوص والعرض"],["contact","التواصل والشحن"],["imp","Impressum"],["legal","صفحات قانونية وشحن"]];
+var TABS=[["prods","المنتجات"],["cats","الفئات"],["hero","صور الصفحة الأولى"],["texts","النصوص والعرض"],["contact","التواصل والشحن"],["imp","Impressum"],["legal","صفحات قانونية وشحن"],["soon","قريباً وعدّاد"],["wl","قائمة الإشعار"]];
 function render(){
  var app=$("#app");
  if(!S.site){app.innerHTML=loginHTML();return}
@@ -181,7 +181,7 @@ function loginHTML(){
  +'<p id="lerr" class="meta" style="color:var(--bad)"></p><button class="btn" data-act="login">دخول</button></div></div>';
 }
 function pane(){
- var p=$("#pane"),f={prods:paneProds,cats:paneCats,hero:paneHero,texts:paneTexts,contact:paneContact,imp:paneImp,legal:paneLegal}[S.tab];p.innerHTML=f();
+ var p=$("#pane"),f={prods:paneProds,cats:paneCats,hero:paneHero,texts:paneTexts,contact:paneContact,imp:paneImp,legal:paneLegal,soon:paneSoon,wl:paneWl}[S.tab];p.innerHTML=f();
 }
 function catName(id){var c=(S.cats||[]).filter(function(x){return slug(x.id)===slug(id)})[0];return c?(c.name_de||c.name_en||c.id):id}
 document.addEventListener('toggle',function(e){var d=e.target;if(d&&d.classList&&d.classList.contains('cgrp')){window.OPENC=window.OPENC||{};window.OPENC[d.dataset.c]=d.open}},true);
@@ -223,6 +223,45 @@ function paneTexts(){
 function paneContact(){
  var s=S.site;
  return '<h1>التواصل والشحن</h1><div class="card">'+field("رقم واتساب (بدون + ومسافات، مثال 4915112345678)",inp("site.whatsapp",s.whatsapp))+field("اسم حساب إنستغرام (بدون @)",inp("site.instagram_handle",s.instagram_handle))+field("روابط منشورات إنستغرام (رابط بكل سطر، حتى 6)",'<textarea data-b="site.instagram_posts" data-lines="1">'+esc((s.instagram_posts||[]).join("\n"))+'</textarea>')+field("رابط خدمة الطلبات (Worker)",inp("site.orders_api",s.orders_api))+field("مفتاح Stripe العام للدفع داخل الموقع (pk_live_… أو pk_test_…)",inp("site.stripe_pk",s.stripe_pk))+field("رابط تقييم Google (اختياري)",inp("site.google_review_url",s.google_review_url))+'<div class="two">'+field("تكلفة الشحن",inp("site.shipping_cost",s.shipping_cost,"number"))+field("العملة",inp("site.currency",s.currency))+'</div></div>';
+}
+function pairP(label,path,ph,area){var v=getp(S.site,path)||{};var f=function(p,x,h){return area?'<textarea data-b="'+p+'" placeholder="'+esc(h)+'" rows="2">'+esc(x||"")+'</textarea>':'<input type="text" data-b="'+p+'" value="'+esc(x||"")+'" placeholder="'+esc(h)+'">'};return '<div class="two" style="margin-top:8px">'+field("English",f("site."+path+".en",v.en,ph.en))+field("Deutsch",f("site."+path+".de",v.de,ph.de))+'</div>'}
+function paneSoon(){
+ var so=S.site.soon=S.site.soon||{},m=so.mode||(so.enabled?"soon":"");
+ return '<h1>منطقة الفئات بالصفحة الأولى</h1><p class="sub">اختر شو يظهر مكان الفئات: الفئات العادية، أو صندوق Coming soon، أو عدّاد تنازلي. المتجر والمنتجات بتنخفي لما تختار Coming soon أو العدّاد. الكلام الرمادي بالحقول هو النص الافتراضي اللي بيظهر إذا تركتها فاضية.</p>'
+ +'<div class="card"><b>شو يظهر؟</b>'+field("الوضع",sel("site.soon.mode",m,{"":"الفئات (عادي)","soon":"Coming soon","countdown":"عدّاد تنازلي"}))+'</div>'
+ +'<div class="card"><b>وضع Coming soon</b>'
+ +'<p class="hint" style="margin-top:8px">العنوان الكبير:</p>'+pairP("","soon.title",{en:"Coming soon",de:"Bald verfügbar"})
+ +'<p class="hint">الجملة تحت العنوان:</p>'+pairP("","soon.text",{en:"Our collection is being prepared.",de:"Unsere Kollektion wird gerade vorbereitet."},1)+'</div>'
+ +'<div class="card"><b>وضع العدّاد التنازلي</b>'
+ +'<p class="hint" style="margin-top:8px">عنوان فوق الجملة (اختياري، الافتراضي: بدون):</p>'+pairP("","soon.cd_title",{en:"",de:""})
+ +'<p class="hint">الجملة فوق العدّاد:</p>'+pairP("","soon.cd_text",{en:"Our collection launches in:",de:"Unsere Kollektion startet in:"},1)
+ +field("تاريخ ووقت الإطلاق (بتوقيت ألمانيا)",inp("site.soon.launch_at",so.launch_at,"datetime-local"))
+ +'<div class="row" style="margin-top:12px"><b class="grow">لما يخلص العدّاد: ارجع الفئات تلقائياً</b>'+sw("site.soon.auto_open",so.auto_open!==false)+'</div></div>'
+ +'<div class="card"><div class="row"><b class="grow">نموذج "بلّغني بالإيميل" تحت الصندوق/العدّاد</b>'+sw("site.soon.notify",!!so.notify)+'</div>'
+ +'<p class="hint" style="margin-top:8px">الزائر بيكتب إيميله ويوافق، وبيجيه إيميل تأكيد (Double-Opt-In). بعد ما يأكّد بيتسجّل بتبويب "قائمة الإشعار". بيحتاج Resend مضبوط بالـ Worker.</p>'
+ +'<p class="hint">الجملة فوق خانة الإيميل:</p>'+pairP("","soon.notify_text",{en:"Enter your email and be the first to know when we launch.",de:"Trag deine E-Mail-Adresse ein und erfahre als Erste/r, wenn es losgeht."})
+ +'<div class="row" style="margin-top:14px"><b class="grow">إرسال إشعار الإطلاق تلقائياً لما يجي وقت الإطلاق</b>'+sw("site.soon.notify_auto",!!so.notify_auto)+'</div>'
+ +'<p class="hint">بيستخدم تاريخ الإطلاق من بطاقة العدّاد، وبيبعت للمؤكّدين بس (حتى 90 بالدفعة، لأن Resend المجاني حدّه 100 إيميل باليوم). ممكن كمان تبعت يدوياً من تبويب "قائمة الإشعار".</p>'
+ +'<p class="hint">عنوان إيميل الإطلاق:</p>'+pairP("","soon.mail_subject",{en:"Kylixe is now open",de:"Kylixe ist jetzt online"})
+ +'<p class="hint">نص إيميل الإطلاق:</p>'+pairP("","soon.mail_text",{en:"We are live: our shop is now open. Thank you for being here!",de:"Es geht los: Unser Shop ist jetzt geöffnet. Danke, dass du dabei bist!"},1)+'</div>';
+}
+var WL={items:[],sha:null,loaded:false,loading:false,err:""};
+function wlLoad(){if(WL.loading)return;WL.loading=true;WL.err="";
+ oapi("waitlist.json").then(function(j){var d={};try{d=JSON.parse(decodeURIComponent(escape(atob(String(j.content).replace(/\s/g,"")))))}catch(_){}WL.items=(d.items||[]).slice().sort(function(x,y){return String(y.at).localeCompare(String(x.at))});WL.sha=j.sha;WL.loaded=true},function(e){if(e.status===404){WL.items=[];WL.sha=null;WL.loaded=true;return}throw e})
+ .catch(function(e){WL.err=e.status===401?"المفتاح غير صحيح أو منتهي.":"صار خطأ: "+(e.message||e.status)}).then(function(){WL.loading=false;if(S.tab==="wl")pane()})}
+function wlSave(items,msg){return oapi("waitlist.json").then(function(j){var d={};try{d=JSON.parse(decodeURIComponent(escape(atob(String(j.content).replace(/\s/g,"")))))}catch(_){}d.items=items;return oapi("waitlist.json",{method:"PUT",body:{message:msg,sha:j.sha,content:btoa(unescape(encodeURIComponent(JSON.stringify(d,null,1))))}})})}
+function wlCall(extra){return fetch(String(S.site.orders_api||"").replace(/\/+$/,"")+"/notify/send",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(Object.assign({gh:S.token},extra||{}))}).then(function(r){return r.json().then(function(j){j.status=r.status;return j})})}
+function paneWl(){
+ if(!WL.loaded&&!WL.loading&&!WL.err)wlLoad();
+ var it=WL.items,ok=it.filter(function(d){return d.status==="confirmed"}).length,sent=it.filter(function(d){return d.sent_at}).length,todo=it.filter(function(d){return d.status==="confirmed"&&!d.sent_at}).length;
+ var h='<h1>قائمة الإشعار</h1><p class="sub">إيميلات الزوار اللي طلبوا يتبلّغوا عند بدء البيع. الشخص بيصير "مؤكّد" بعد ما يضغط رابط التأكيد بالإيميل، وبيوصله إشعار الإطلاق وهو بس. كل إيميل فيه رابط إلغاء اشتراك.</p>';
+ h+='<p><button class="btn" data-act="wlreload">تحديث</button> <button class="btn" data-act="wlcopy">نسخ الإيميلات المؤكدة</button> <button class="btn" data-act="wlcsv">تنزيل CSV</button></p>';
+ h+='<div class="card"><b>الإرسال</b><p class="hint" style="margin-top:6px">بانتظار الإرسال: <bdi>'+todo+'</bdi> مؤكّد. حدّ Resend المجاني 100 إيميل باليوم، فالزر بيبعت حتى 90 بالمرة.</p><p><button class="btn" data-act="wlsend"'+(todo?'':' disabled')+'>إرسال إشعار الإطلاق الآن</button> <button class="btn ghost" data-act="wltest">إرسال تجربة لإيميلي</button></p></div>';
+ if(WL.err)h+='<div class="card empty" style="color:var(--bad)">'+esc(WL.err)+'</div>';
+ else if(WL.loading&&!WL.loaded)h+='<div class="card empty">عم يحمّل...</div>';
+ else if(!it.length)h+='<div class="card empty">ما في تسجيلات بعد.</div>';
+ else{h+='<p class="hint">الإجمالي: '+it.length+' · مؤكّد: '+ok+' · انبعتله: '+sent+'</p>';it.forEach(function(d,i){var st=d.sent_at?'انبعتله':d.status==="confirmed"?'مؤكّد':'بانتظار التأكيد';h+='<div class="card"><div class="row"><div class="grow"><div class="title"><bdi>'+esc(d.email)+'</bdi><span class="badge'+(d.status==="confirmed"?'':' soon')+'">'+st+'</span></div><div class="meta"><bdi>'+esc(String(d.at||"").slice(0,16).replace("T"," "))+'</bdi> · '+(d.lang==="de"?"DE":"EN")+'</div></div><button type="button" class="btn sm bad" data-act="wldel" data-i="'+i+'">حذف</button></div></div>'})}
+ return h;
 }
 function paneLegal(){
  var lg=S.site.legal=S.site.legal||{};
@@ -308,6 +347,13 @@ document.addEventListener("click",function(e){
   return}
  var b=e.target.closest("[data-act]");if(!b)return;var act=b.dataset.act,i2=Number(b.dataset.i);
  if(act==="login"){S.token=$("#tk").value.trim();S.repo=$("#rp").value.trim()||CFG.repo;S.orepo=($("#orp").value.trim())||"kylixe-de/kylixe-orders";b.disabled=true;b.textContent="...";loadAll().then(function(){try{localStorage.setItem("kylixe-admin",JSON.stringify({token:S.token,repo:S.repo,branch:S.branch,orepo:S.orepo}))}catch(x){}render()}).catch(function(err){b.disabled=false;b.textContent="دخول";$("#lerr").textContent=err.status===401?"المفتاح غير صحيح أو منتهي.":err.status===404?"ما لقيت المستودع أو الملفات. تأكد من اسم المستودع وصلاحيات المفتاح.":"صار خطأ: "+err.message})}
+
+ if(act==="wlreload"){WL.loaded=false;wlLoad();pane();return}
+ if(act==="wlcopy"){var t=WL.items.filter(function(d){return d.status==="confirmed"}).map(function(d){return d.email}).join("\n");(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast("تم النسخ")},function(){toast("ما قدرت أنسخ",1)});return}
+ if(act==="wlcsv"){var c="email,lang,status,signed_up,sent\n"+WL.items.map(function(d){return[d.email,d.lang,d.status,d.at,d.sent_at||""].join(",")}).join("\n"),u=URL.createObjectURL(new Blob([c],{type:"text/csv"})),l=document.createElement("a");l.href=u;l.download="kylixe-waitlist.csv";document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u)},500);return}
+ if(act==="wldel"){var d=WL.items[i2];if(!d||!confirm("حذف "+d.email+"؟"))return;var rest=WL.items.filter(function(x){return x.id!==d.id});wlSave(rest,"remove").then(function(){WL.items=rest;pane();toast("انحذف")}).catch(function(e){toast("ما انحذف: "+(e.message||e.status),1)});return}
+ if(act==="wlsend"){if(!confirm("بيتبعت إشعار الإطلاق لكل المؤكّدين اللي لسا ما وصلهم. تكمل؟"))return;b.disabled=true;wlCall().then(function(j){b.disabled=false;if(j.status!==200){toast(j.status===403?"المفتاح ما عنده صلاحية على المستودع":"ما انبعت: "+(j.error||j.status),1);return}toast("انبعت لـ "+j.sent+(j.left?" (باقي "+j.left+")":""));WL.loaded=false;wlLoad()}).catch(function(){b.disabled=false;toast("ما قدرت أوصل للـ Worker",1)});return}
+ if(act==="wltest"){var em=prompt("لأي إيميل ابعت التجربة؟");if(!em)return;wlCall({test:em,lang:document.documentElement.lang==="en"?"en":"de"}).then(function(j){toast(j.status===200&&j.ok?"انبعتت التجربة":"ما انبعتت ("+(j.error||j.status)+")",!(j.status===200&&j.ok))}).catch(function(){toast("ما قدرت أوصل للـ Worker",1)});return}
  if(act==="logout"){if(dirtyKeys().length&&!confirm("في تغييرات غير محفوظة. تخرج؟"))return;try{localStorage.removeItem("kylixe-admin")}catch(x){}S.token="";S.site=null;render()}
  if(act==="reload"){if(dirtyKeys().length&&!confirm("بتضيع التغييرات غير المحفوظة. تكمل؟"))return;S.pend={};loadAll().then(function(){render();toast("تم التحديث")}).catch(function(x){toast(x.message,1)})}
  if(act==="newprod")openProd(-1);
