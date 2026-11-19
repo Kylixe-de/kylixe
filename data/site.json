@@ -86,7 +86,7 @@
   },
   "legal": {},
   "soon": {
-    "mode": "soon",
+    "mode": "",
     "notify": true
   }
 }
