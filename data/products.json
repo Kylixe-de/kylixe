@@ -231,24 +231,38 @@
     "payment_link": ""
   },
   {
-    "active": false,
+    "active": true,
     "id": "cup-pinch",
     "category": "cups",
-    "name_en": "Pinch cup",
-    "name_de": "Pinch-Tasse",
-    "price": 22,
+    "name_en": "Lumi",
+    "name_de": "Lumi",
+    "price": 31,
     "desc_en": "A cup with a gently pinched waist.",
     "desc_de": "Eine Tasse mit sanft eingezogener Taille.",
     "height_cm": 9,
     "diameter_cm": 8,
-    "images": [],
+    "images": [
+      {
+        "src": "images/products/lumi-mwnddt9u.png",
+        "cutout": false
+      },
+      {
+        "src": "images/products/lumi-mwnddzy8.png",
+        "cutout": false
+      },
+      {
+        "src": "images/products/lumi-mwndepuj.png",
+        "cutout": false
+      }
+    ],
     "shape": "pinch",
     "colors": [
       "sand",
       "terracotta",
-      "cream"
+      "sage"
     ],
-    "payment_link": ""
+    "payment_link": "",
+    "coming_soon": true
   },
   {
     "active": false,
