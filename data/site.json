@@ -83,5 +83,9 @@
     "w_id": "",
     "court": "",
     "reg_no": ""
+  },
+  "legal": {},
+  "soon": {
+    "mode": "soon"
   }
 }
