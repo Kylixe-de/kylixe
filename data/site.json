@@ -86,7 +86,7 @@
   },
   "legal": {},
   "soon": {
-    "mode": "countdown",
+    "mode": "",
     "notify": true,
     "launch_at": "2026-12-20T19:51"
   }
