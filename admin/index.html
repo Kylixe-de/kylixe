@@ -235,11 +235,16 @@ function paneSoon(){
  +'<div class="card"><b>وضع العدّاد التنازلي</b>'
  +'<p class="hint" style="margin-top:8px">عنوان فوق الجملة (اختياري، الافتراضي: بدون):</p>'+pairP("","soon.cd_title",{en:"",de:""})
  +'<p class="hint">الجملة فوق العدّاد:</p>'+pairP("","soon.cd_text",{en:"Our collection launches in:",de:"Unsere Kollektion startet in:"},1)
+ +'<p class="hint">أسماء خانات العدّاد، 4 كلمات مفصولة بفاصلة (أيام، ساعات، دقائق، ثواني):</p>'+pairP("","soon.cd_labels",{en:"Days, Hrs, Min, Sec",de:"Tage, Std, Min, Sek"})
  +field("تاريخ ووقت الإطلاق (بتوقيت ألمانيا)",inp("site.soon.launch_at",so.launch_at,"datetime-local"))
  +'<div class="row" style="margin-top:12px"><b class="grow">لما يخلص العدّاد: ارجع الفئات تلقائياً</b>'+sw("site.soon.auto_open",so.auto_open!==false)+'</div></div>'
  +'<div class="card"><div class="row"><b class="grow">نموذج "بلّغني بالإيميل" تحت الصندوق/العدّاد</b>'+sw("site.soon.notify",!!so.notify)+'</div>'
  +'<p class="hint" style="margin-top:8px">الزائر بيكتب إيميله ويوافق، وبيجيه إيميل تأكيد (Double-Opt-In). بعد ما يأكّد بيتسجّل بتبويب "قائمة الإشعار". بيحتاج Resend مضبوط بالـ Worker.</p>'
  +'<p class="hint">الجملة فوق خانة الإيميل:</p>'+pairP("","soon.notify_text",{en:"Enter your email and be the first to know when we launch.",de:"Trag deine E-Mail-Adresse ein und erfahre als Erste/r, wenn es losgeht."})
+ +'<p class="hint">نص الزر:</p>'+pairP("","soon.notify_btn",{en:"Notify me",de:"Benachrichtigen"})
+ +'<p class="hint">النص داخل خانة الإيميل (placeholder):</p>'+pairP("","soon.notify_ph",{en:"name@example.com",de:"name@example.com"})
+ +'<p class="hint">نص الموافقة (مربع الاختيار). اكتب الكلمات اللي بدك تصير رابط للـ Datenschutz بين [[ ]]، مثال: [[Datenschutzerklärung]]:</p>'+pairP("","soon.notify_consent",{en:"I would like to be informed once by email about the launch. You will first get a confirmation email. See our [[privacy policy]]. You can unsubscribe at any time.",de:"Ich möchte einmalig per E-Mail über den Verkaufsstart informiert werden. Du bekommst zuerst eine Bestätigungs-E-Mail. Mehr dazu in der [[Datenschutzerklärung]]. Abmelden jederzeit möglich."},1)
+ +'<p class="hint">رسالة "تم الإرسال" بعد ما الزائر يسجّل:</p>'+pairP("","soon.notify_ok",{en:"Almost done! Please confirm your email address with the link in the message we just sent you (check your spam folder too).",de:"Fast geschafft! Bitte bestätige deine E-Mail-Adresse über den Link in der Nachricht, die wir dir gerade geschickt haben (auch im Spam-Ordner nachsehen)."},1)
  +'<div class="row" style="margin-top:14px"><b class="grow">إرسال إشعار الإطلاق تلقائياً لما يجي وقت الإطلاق</b>'+sw("site.soon.notify_auto",!!so.notify_auto)+'</div>'
  +'<p class="hint">بيستخدم تاريخ الإطلاق من بطاقة العدّاد، وبيبعت للمؤكّدين بس (حتى 90 بالدفعة، لأن Resend المجاني حدّه 100 إيميل باليوم). ممكن كمان تبعت يدوياً من تبويب "قائمة الإشعار".</p>'
  +'<p class="hint">عنوان إيميل الإطلاق:</p>'+pairP("","soon.mail_subject",{en:"Kylixe is now open",de:"Kylixe ist jetzt online"})
