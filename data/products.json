@@ -41,12 +41,32 @@
     "desc_de": "Sanfte Wellen ziehen sich um den Körper, Schicht für Schicht gedruckt.",
     "height_cm": 22,
     "diameter_cm": 14,
-    "images": [],
+    "images": [
+      {
+        "src": "images/products/wave-vase-mwnvdxup.jpg",
+        "cutout": false
+      },
+      {
+        "src": "images/products/wave-vase-mwnvead3.jpg",
+        "cutout": false
+      },
+      {
+        "src": "images/products/wave-vase-mwnvefw8.jpg",
+        "cutout": false
+      },
+      {
+        "src": "images/products/wave-vase-mwnvejsa.jpg",
+        "cutout": false
+      },
+      {
+        "src": "images/products/wave-vase-mwnvenoz.png",
+        "cutout": false
+      }
+    ],
     "shape": "wave",
     "colors": [
-      "sage",
       "sand",
-      "cream"
+      "orange"
     ],
     "payment_link": ""
   },
