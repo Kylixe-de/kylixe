@@ -92,6 +92,16 @@
   },
   "promos": [
     {
+      "name": "Neue Aktion",
+      "type": "percent",
+      "percent": 10,
+      "scope": "all",
+      "start": "",
+      "end": "2026-11-22T23:05",
+      "active": true,
+      "show_countdown": false
+    },
+    {
       "name": "Black Friday 2026",
       "type": "percent",
       "percent": 20,
