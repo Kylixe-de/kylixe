@@ -1,36 +1,5 @@
 [
   {
-    "active": false,
-    "id": "twist",
-    "category": "vases",
-    "name_en": "Large ceramic vase",
-    "name_de": "Große Keramikvase",
-    "price": 120,
-    "desc_en": "A large, sculptural vase with flowing curves and a visible layered texture.",
-    "desc_de": "Eine große, skulpturale Vase mit fließenden Kurven und sichtbarer Schichtstruktur.",
-    "height_cm": 0,
-    "diameter_cm": 0,
-    "images": [
-      {
-        "src": "images/products/large-ceramic-vase-1.webp",
-        "cutout": true
-      },
-      {
-        "src": "images/products/large-ceramic-vase-2.jpg",
-        "cutout": false
-      },
-      {
-        "src": "images/products/large-ceramic-vase-3.jpg",
-        "cutout": false
-      }
-    ],
-    "shape": "wave",
-    "colors": [
-      "sage"
-    ],
-    "payment_link": ""
-  },
-  {
     "active": true,
     "id": "wave",
     "category": "vases",
@@ -67,26 +36,6 @@
     "colors": [
       "sand",
       "orange"
-    ],
-    "payment_link": ""
-  },
-  {
-    "active": false,
-    "id": "tower",
-    "category": "vases",
-    "name_en": "Tower vase",
-    "name_de": "Turmvase",
-    "price": 55,
-    "desc_en": "A slim, tapering shape that shows every print line.",
-    "desc_de": "Eine schlanke, nach oben schmaler werdende Form, die jede Drucklinie zeigt.",
-    "height_cm": 28,
-    "diameter_cm": 12,
-    "images": [],
-    "shape": "tower",
-    "colors": [
-      "cream",
-      "sage",
-      "terracotta"
     ],
     "payment_link": ""
   },
