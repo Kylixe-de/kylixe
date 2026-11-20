@@ -106,7 +106,8 @@
         "de": "Black Friday",
         "en": "Black Friday"
       },
-      "active": true
+      "active": true,
+      "show_countdown": false
     }
   ]
 }
