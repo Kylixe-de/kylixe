@@ -119,8 +119,9 @@
   },
   "secret_video": {},
   "sections": {
-    "catalog": false,
+    "catalog": true,
     "about": false,
-    "contact": false
+    "contact": false,
+    "igs": true
   }
 }
