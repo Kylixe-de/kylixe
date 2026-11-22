@@ -5,8 +5,8 @@
   "hero_images": [],
   "hero_seconds": 6.5,
   "hero_subtitle": {
-    "en": "Unique & modern pottery, printed in clay layer by layer.",
-    "de": "Einzigartige, moderne Töpferware, Schicht für Schicht aus Ton gedruckt."
+    "en": "",
+    "de": ""
   },
   "categories_title": {
     "en": "Our categories",
@@ -104,7 +104,9 @@
     "percent": 20,
     "days": 15
   },
-  "secret_video": {},
+  "secret_video": {
+    "enabled": false
+  },
   "sections": {
     "catalog": false,
     "about": false,
