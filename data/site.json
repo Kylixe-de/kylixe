@@ -2,20 +2,7 @@
   "currency": "EUR",
   "shipping_cost": 5.9,
   "whatsapp": "",
-  "hero_images": [
-    {
-      "image": "images/hero/hero-1.webp",
-      "position": "right"
-    },
-    {
-      "image": "images/hero/hero-2.webp",
-      "position": "right"
-    },
-    {
-      "image": "images/hero/hero-3.webp",
-      "position": "center"
-    }
-  ],
+  "hero_images": [],
   "hero_seconds": 6.5,
   "hero_subtitle": {
     "en": "Unique & modern pottery, printed in clay layer by layer.",
