@@ -119,7 +119,7 @@
   },
   "secret_video": {},
   "sections": {
-    "catalog": true,
+    "catalog": false,
     "about": false,
     "contact": false,
     "igs": true
