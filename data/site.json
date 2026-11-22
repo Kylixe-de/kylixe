@@ -117,5 +117,10 @@
     "percent": 20,
     "days": 15
   },
-  "secret_video": {}
+  "secret_video": {},
+  "sections": {
+    "catalog": false,
+    "about": false,
+    "contact": false
+  }
 }
