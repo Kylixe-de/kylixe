@@ -16,10 +16,6 @@
         "cutout": false
       },
       {
-        "src": "images/products/wave-vase-mwnvead3.jpg",
-        "cutout": false
-      },
-      {
         "src": "images/products/wave-vase-mwnvefw8.jpg",
         "cutout": false
       },
@@ -37,7 +33,18 @@
       "sand",
       "orange"
     ],
-    "payment_link": ""
+    "payment_link": "",
+    "teaser": {
+      "mode": "soon",
+      "disc": {
+        "enabled": true,
+        "percent": 15,
+        "days": 10
+      }
+    },
+    "teaser_cutout": true,
+    "coming_soon": true,
+    "soon_notify": true
   },
   {
     "active": false,
@@ -140,7 +147,7 @@
     "payment_link": ""
   },
   {
-    "active": true,
+    "active": false,
     "id": "plate-layer",
     "category": "plates",
     "name_en": "Layer plate",
