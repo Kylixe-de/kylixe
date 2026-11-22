@@ -88,7 +88,8 @@
   "soon": {
     "mode": "soon",
     "notify": true,
-    "launch_at": "2026-12-20T19:51"
+    "launch_at": "2026-12-20T19:51",
+    "notify_auto": true
   },
   "promos": [
     {
@@ -108,5 +109,10 @@
       },
       "active": false
     }
-  ]
+  ],
+  "signup_discount": {
+    "enabled": true,
+    "percent": 20,
+    "days": 15
+  }
 }
