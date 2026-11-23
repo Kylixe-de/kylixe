@@ -34,7 +34,15 @@
       "orange"
     ],
     "payment_link": "",
-    "teaser_cutout": true
+    "teaser_cutout": true,
+    "model3d": {
+      "src": "models/wave-mwtfugbb.k3d",
+      "name": "Kylixe_Facet_Twist_Vase_print-size_12pct.stl",
+      "tris": 40000,
+      "h_mm": 280,
+      "bytes": 360052,
+      "layer_mm": 1.6
+    }
   },
   {
     "active": false,
