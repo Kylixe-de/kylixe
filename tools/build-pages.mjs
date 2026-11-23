@@ -14,7 +14,7 @@ const site = read("data/site.json", {}), cats = read("data/categories.json", [])
 
 // same rules as the shop page (slug(), CATLIST, PRODUCTS)
 const slug = (v, i) => String(v || "").toLowerCase().replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "item-" + i;
-const RES = new Set(["admin", "data", "images", "fonts", "videos", "tools", "katalog", "impressum", "datenschutz", "agb", "widerruf", "versand", "404"]);
+const RES = new Set(["admin", "data", "images", "fonts", "videos", "tools", "models", "js", "katalog", "impressum", "datenschutz", "agb", "widerruf", "versand", "404"]);
 const esc = (s) => String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const clip = (s, n) => { s = String(s || "").replace(/\s+/g, " ").trim(); return s.length > n ? s.slice(0, n - 1).replace(/\s+\S*$/, "") + "…" : s; };
 

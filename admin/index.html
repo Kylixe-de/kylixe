@@ -132,6 +132,7 @@ input:disabled{background:#e6dcc6!important;color:#9a927a!important;opacity:.6;c
 .modec .ml{font-weight:700;font-size:15px;color:var(--ink)}
 .sec{margin:22px 0 8px;font-size:17px}.lbl2{margin:14px 0 2px;font-weight:600;font-size:14px}.card .lbl2:first-child{margin-top:0}
 .swr{margin:2px 0 6px}
+.m3box{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.m3box canvas{width:140px;height:140px;border-radius:12px;background:#e7d5b0;flex:0 0 140px}.m3box .m3i{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1 1 220px}.m3box .m3i>span{color:#6d6b4f;font-size:13px}.m3box .m3i b{overflow-wrap:anywhere}.m3box.empty{justify-content:space-between}.m3box .btns{display:flex;gap:8px;flex-wrap:wrap}
 .cbox{display:flex;flex-direction:column;align-items:center;gap:12px;padding:14px 6px 6px}
 .big{width:150px;height:150px;border-radius:50%;background:var(--green) center/cover no-repeat;box-shadow:0 0 0 3px var(--card),0 0 0 4.5px var(--yel)}
 .mid{width:96px;height:96px;border-radius:50%;background:#eadbbd center/cover no-repeat;box-shadow:0 0 0 2px var(--card),0 0 0 3px rgba(220,161,76,.6)}
@@ -437,11 +438,12 @@ function drawProd(){
   +'<div class="two">'+field("Kategorie",sel("d.category",d.category,cats))+field("Preis (€)",inp("d.price",d.price,"number"))+'</div>'
   +field("Beschreibung (Deutsch)",txt("d.desc_de",d.desc_de))+field("Beschreibung (English)",txt("d.desc_en",d.desc_en))
   +'<h2>Bilder</h2><p class="sub">Das erste Bild ist das Hauptbild (in der Liste sichtbar). Aktiviere „Freigestellt“ für transparente Bilder (PNG oder WebP).</p>'+imgsHTML(d.images)
+  +'<h2>3D-Druck</h2><p class="sub">Optional. Auf der Produktseite oben links erscheint „Druck ansehen“: die Vase wird Schicht für Schicht gedruckt und danach gebrannt. Die Höhe wird in Millimetern aus der STL gelesen.</p>'+m3HTML(d)
   +'<div class="two">'+field("Höhe in cm (0 = ausblenden)",inp("d.height_cm",d.height_cm,"number"))+field("Durchmesser in cm (0 = ausblenden)",inp("d.diameter_cm",d.diameter_cm,"number"))+'</div>'
   +field("Zahlungslink (optional)",inp("d.payment_link",d.payment_link));
  }else h+='<div class="two">'+field("Kategorie",sel("d.category",d.category,cats))+field("Preis nach dem Start (€)",inp("d.price",d.price,"number"))+'</div>'+teaserHTML("p");
  h+='<div class="ft"><button type="button" class="btn" data-act="dsave">Fertig</button>'+(ED.i>=0?'<button type="button" class="btn bad" data-act="ddel">Produkt löschen</button>':'')+'</div>';
- dlg(h);
+ dlg(h);m3Prev();
 }
 /* sync teaser config to the flags the website and worker read */
 function teaserSync(d,kind){var t=d.teaser||{},m=t.mode||"normal";
@@ -569,6 +571,8 @@ document.addEventListener("click",function(e){
  if(act==="ddel"){if(confirm("Dieses Produkt endgültig löschen? (Zum Ausblenden stattdessen „Ausblenden“ nutzen)")){S.prods.splice(ED.i,1);$("#dlg").close();ED=null;pane();bar()}}
  if(act==="catimg")pickImage("categories",ED.d.id||ED.d.name_en||"cat",function(p,tp){ED.d[b.dataset.k]=p;ED.d[b.dataset.k+"_thumb"]=tp||"";drawCat()});
  if(act==="catimgdel"){ED.d[b.dataset.k]="";drawCat()}
+ else if(act==="m3pick")m3Pick();
+ else if(act==="m3del"){delete ED.d.model3d;drawProd()}
  else if(act==="teaserimg")pickImage("products",(ED.d.id||ED.d.name_en||ED.d.name_de||"p")+"-teaser",function(p,tp){ED.d.teaser_image=p;ED.d.teaser_thumb=tp||"";drawProd()});
  else if(act==="teaserdel"){ED.d.teaser_image="";ED.d.teaser_thumb="";drawProd()}
  if(act==="vidpick"){var vk=b.dataset.k;pickVideo(vk==="src"?"secret":"secret-portrait",function(p){S.site.secret_video=S.site.secret_video||{};S.site.secret_video[vk]=p;pane();bar()});return}
@@ -604,7 +608,7 @@ document.addEventListener("click",function(e){
  if(act==="save")save(b);
 });
 function referenced(){
- var r={};S.prods.forEach(function(p){(p.images||[]).forEach(function(x){if(x.src)r[x.src]=1;if(x.thumb)r[x.thumb]=1});if(p.teaser_image)r[p.teaser_image]=1;if(p.teaser_thumb)r[p.teaser_thumb]=1});
+ var r={};S.prods.forEach(function(p){(p.images||[]).forEach(function(x){if(x.src)r[x.src]=1;if(x.thumb)r[x.thumb]=1});if(p.teaser_image)r[p.teaser_image]=1;if(p.model3d&&p.model3d.src)r[p.model3d.src]=1;if(p.teaser_thumb)r[p.teaser_thumb]=1});
  S.cats.forEach(function(c){if(c.image)r[c.image]=1;if(c.hover_image)r[c.hover_image]=1;if(c.image_thumb)r[c.image_thumb]=1;if(c.hover_image_thumb)r[c.hover_image_thumb]=1});
  (S.site.hero_images||[]).forEach(function(x){if(x.image)r[x.image]=1});var sv=S.site.secret_video||{};if(sv.src)r[sv.src]=1;if(sv.src_portrait)r[sv.src_portrait]=1;return r;
 }
@@ -634,6 +638,59 @@ function save(btn){
 window.addEventListener("beforeunload",function(e){if(S.site&&dirtyKeys().length){e.preventDefault();e.returnValue=""}});
 
 
+
+/* ===== 3D print view: STL upload, reduced in the browser and stored as compact .k3d ===== */
+var M3={};
+function m3Lib(src,glob){return M3[src]||(M3[src]=window[glob]?Promise.resolve():new Promise(function(res,rej){var x=document.createElement("script");x.src=src;x.onload=res;x.onerror=function(){delete M3[src];rej(new Error("lib"))};document.head.appendChild(x)}))}
+function m3Fmt(n){return Math.round(n).toLocaleString("de-DE")}
+function m3Size(b){return b<1048576?Math.max(1,Math.round(b/1024))+" KB":(b/1048576).toFixed(1).replace(".",",")+" MB"}
+function m3HTML(d){var m=d.model3d;
+ if(!m||!m.src)return '<div class="card m3box empty"><div class="m3i">'+'<b>Keine 3D-Datei</b><span>STL hochladen, dann erscheint auf der Produktseite „Druck ansehen“ und die Vase wird Schicht für Schicht gedruckt. Große Dateien werden automatisch verkleinert.</span></div><div class="btns"><button type="button" class="btn sm" data-act="m3pick">STL hochladen</button></div></div>';
+ var lh=parseFloat(m.layer_mm)>0?parseFloat(m.layer_mm):1.6,L=m.h_mm?Math.round(m.h_mm/lh):0;
+ return '<div class="card m3box"><canvas id="m3pv" width="220" height="220" aria-label="3D-Vorschau"></canvas><div class="m3i"><b>'+esc(m.name||"3D-Modell")+'</b><span>'+(m.tris?m3Fmt(m.tris)+" Dreiecke":"")+(m.h_mm?" · "+Math.round(m.h_mm)+" mm hoch":"")+(L?" · "+L+" Schichten":"")+(m.bytes?" · "+m3Size(m.bytes):"")+'</span>'
+  +field("Schichthöhe in mm",inp("d.model3d.layer_mm",m.layer_mm==null?1.6:m.layer_mm,"number"))
+  +'<div class="btns"><button type="button" class="btn sm" data-act="m3pick">STL ersetzen</button><button type="button" class="btn ghost sm" data-act="m3del">Entfernen</button></div></div></div>'}
+function m3Parse(buf){var dv=new DataView(buf),n=buf.byteLength>=84?dv.getUint32(80,true):0,o,i,j;
+ if(n>0&&buf.byteLength===84+n*50){var a=new Float32Array(n*9);for(i=0;i<n;i++){o=84+i*50+12;for(j=0;j<9;j++)a[i*9+j]=dv.getFloat32(o+j*4,true)}return a}
+ var t=new TextDecoder().decode(buf),re=/vertex\s+([-+\d.eE]+)\s+([-+\d.eE]+)\s+([-+\d.eE]+)/g,r=[],m;while((m=re.exec(t)))r.push(+m[1],+m[2],+m[3]);if(r.length<9)throw new Error("stl");return new Float32Array(r)}
+function m3Weld(s){var nv=s.length/3,mn=[1e30,1e30,1e30],mx=[-1e30,-1e30,-1e30],i,k;for(i=0;i<nv;i++)for(k=0;k<3;k++){var v=s[i*3+k];if(v<mn[k])mn[k]=v;if(v>mx[k])mx[k]=v}
+ var q=Math.max(mx[0]-mn[0],mx[1]-mn[1],mx[2]-mn[2])*1e-6||1e-6,map=new Map(),P=[],I=new Uint32Array(nv);
+ for(i=0;i<nv;i++){var x=s[i*3],y=s[i*3+1],z=s[i*3+2],key=Math.round(x/q)+","+Math.round(y/q)+","+Math.round(z/q),id=map.get(key);if(id===undefined){id=P.length/3;map.set(key,id);P.push(x,y,z)}I[i]=id}
+ var J=[];for(i=0;i<nv;i+=3)if(I[i]!==I[i+1]&&I[i+1]!==I[i+2]&&I[i]!==I[i+2])J.push(I[i],I[i+1],I[i+2]);return{P:new Float32Array(P),I:new Uint32Array(J)}}
+function m3Enc(P,I){var nv=P.length/3,ni=I.length,mn=[1e30,1e30,1e30],mx=[-1e30,-1e30,-1e30],i,k;for(i=0;i<nv;i++)for(k=0;k<3;k++){var v=P[i*3+k];if(v<mn[k])mn[k]=v;if(v>mx[k])mx[k]=v}
+ var ex=[0,1,2].map(function(k){return(mx[k]-mn[k])||1}),big=nv>65535,o=40+nv*6;o+=(4-o%4)%4;var buf=new ArrayBuffer(o+ni*(big?4:2)),dv=new DataView(buf);
+ dv.setUint32(0,0x3144334b,true);dv.setUint32(4,nv,true);dv.setUint32(8,ni,true);dv.setUint32(12,big?1:0,true);for(k=0;k<3;k++){dv.setFloat32(16+k*4,mn[k],true);dv.setFloat32(28+k*4,ex[k],true)}
+ var q=new Uint16Array(buf,40,nv*3);for(i=0;i<nv;i++)for(k=0;k<3;k++)q[i*3+k]=Math.round((P[i*3+k]-mn[k])/ex[k]*65535);
+ if(big)new Uint32Array(buf,o,ni).set(I);else new Uint16Array(buf,o,ni).set(I);return{buf:buf,dims:ex}}
+var M3MAX=40000;
+function m3Make(f){return m3Lib("../js/meshopt_simplifier.js","MeshoptSimplifier").then(function(){return MeshoptSimplifier.ready}).then(function(){return f.arrayBuffer()}).then(function(buf){
+ var w=m3Weld(m3Parse(buf)),P=w.P,I=w.I,t0=I.length/3;if(!t0)throw new Error("stl");
+ if(t0>M3MAX){var r=MeshoptSimplifier.simplify(I,P,3,M3MAX*3,.05,[]);if(r[0].length/3>M3MAX*1.15)r=MeshoptSimplifier.simplify(I,P,3,M3MAX*3,.3,[]);
+  var ix=r[0],u=new Int32Array(P.length/3).fill(-1),np=[],ni=new Uint32Array(ix.length);for(var i=0;i<ix.length;i++){var v=ix[i];if(u[v]<0){u[v]=np.length/3;np.push(P[v*3],P[v*3+1],P[v*3+2])}ni[i]=u[v]}P=new Float32Array(np);I=ni}
+ var e=m3Enc(P,I);return{blob:new Blob([e.buf],{type:"application/octet-stream"}),tris:I.length/3,orig:t0,h:e.dims[2],bytes:e.buf.byteLength}})}
+function m3Pick(){var i=document.createElement("input");i.type="file";i.accept=".stl,model/stl,application/sla";
+ i.onchange=function(){var f=i.files[0];if(!f)return;if(!/\.stl$/i.test(f.name)){toast("Bitte eine STL-Datei wählen.",1);return}
+  toast("STL wird verarbeitet …");var bt=document.querySelector('[data-act="m3pick"]');if(bt){bt.disabled=true;bt.textContent="Wird verarbeitet …"}
+  setTimeout(function(){m3Make(f).then(function(r){if(!ED||ED.t!=="prod")return;
+   var p="models/"+(slug(ED.d.id||ED.d.name_en||ED.d.name_de||"modell")||"modell")+"-"+Date.now().toString(36)+".k3d";S.pend[p]={blob:r.blob,url:URL.createObjectURL(r.blob)};
+   var old=ED.d.model3d||{};ED.d.model3d={src:p,name:f.name,tris:r.tris,h_mm:Math.round(r.h*10)/10,bytes:r.bytes,layer_mm:old.layer_mm!=null&&old.layer_mm!==""?old.layer_mm:1.6};
+   if(r.h<20||r.h>2000)toast("Achtung: Die Datei ist "+Math.round(r.h)+" mm hoch. STL-Dateien sollten in Millimetern exportiert sein.",1);
+   else toast(r.orig>r.tris?"Fertig: von "+m3Fmt(r.orig)+" auf "+m3Fmt(r.tris)+" Dreiecke verkleinert ("+m3Size(r.bytes)+").":"Fertig: "+m3Fmt(r.tris)+" Dreiecke ("+m3Size(r.bytes)+").");
+   drawProd()}).catch(function(e){toast(e&&e.message==="lib"?"Das Werkzeug zum Verkleinern konnte nicht geladen werden. Bitte die Seite neu laden.":"Die STL-Datei ließ sich nicht lesen. Bitte als STL (binär oder ASCII) exportieren.",1);if(bt){bt.disabled=false;bt.textContent="STL hochladen"}})},40)};
+ i.click()}
+var M3V=null;
+function m3Prev(){if(M3V){cancelAnimationFrame(M3V.raf);try{M3V.R.dispose();M3V.R.forceContextLoss()}catch(_){}M3V=null}
+ var cv=document.getElementById("m3pv"),m=ED&&ED.d.model3d;if(!cv||!m||!m.src)return;
+ Promise.all([m3Lib("../js/three.min.js","THREE"),fetch(imgUrl(m.src),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.arrayBuffer()})]).then(function(a){
+  if(document.getElementById("m3pv")!==cv)return;var dv=new DataView(a[1]),nv=dv.getUint32(4,true),ni=dv.getUint32(8,true),fl=dv.getUint32(12,true),mn=[],ex=[],i;for(i=0;i<3;i++){mn[i]=dv.getFloat32(16+i*4,true);ex[i]=dv.getFloat32(28+i*4,true)}
+  var q=new Uint16Array(a[1],40,nv*3),o=40+nv*6;o+=(4-o%4)%4;var I=fl&1?new Uint32Array(a[1],o,ni):new Uint16Array(a[1],o,ni),P=new Float32Array(nv*3);
+  for(i=0;i<nv;i++){P[i*3]=q[i*3]/65535*ex[0]-ex[0]/2;P[i*3+1]=q[i*3+2]/65535*ex[2]-ex[2]/2;P[i*3+2]=-(q[i*3+1]/65535*ex[1]-ex[1]/2)}
+  var T=THREE,g=new T.BufferGeometry();g.setAttribute("position",new T.BufferAttribute(P,3));g.setIndex(new T.BufferAttribute(I,1));g.computeVertexNormals();
+  var R=new T.WebGLRenderer({canvas:cv,antialias:true,alpha:true});R.setPixelRatio(Math.min(2,devicePixelRatio||1));R.setSize(220,220,false);R.outputEncoding=T.sRGBEncoding;
+  var S3=new T.Scene(),C=new T.PerspectiveCamera(30,1,1,1e5);S3.add(new T.HemisphereLight(0xfff3dc,0x3d3f20,.5));var l=new T.DirectionalLight(0xffe6c2,1);l.position.set(-1,1.5,1.2);S3.add(l);
+  var mesh=new T.Mesh(g,new T.MeshStandardMaterial({color:new T.Color(0xb8603a).convertSRGBToLinear(),roughness:.85,flatShading:true}));S3.add(mesh);
+  var D=Math.max(ex[2],ex[0],ex[1])*1.85;C.position.set(0,ex[2]*.35,D);C.lookAt(0,0,0);C.near=D/100;C.far=D*10;C.updateProjectionMatrix();
+  var v={R:R,raf:0};M3V=v;(function t(){if(M3V!==v)return;if(!document.body.contains(cv)){R.dispose();M3V=null;return}mesh.rotation.y+=.012;R.render(S3,C);v.raf=requestAnimationFrame(t)})()}).catch(function(){})}
 /* ---------- publish watcher: shows whether the saved data is really live ---------- */
 var PUBW={last:"",timer:0,run:0};
 function pubBox(cls,html){var b=document.getElementById("pubst");if(!b){b=document.createElement("div");b.id="pubst";document.body.appendChild(b)}b.className=cls;b.innerHTML=html;b.hidden=false;var x=b.querySelector("[data-x]");if(x)x.onclick=function(){b.hidden=true}}
