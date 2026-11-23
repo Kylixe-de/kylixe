@@ -108,7 +108,7 @@
     "enabled": false
   },
   "sections": {
-    "catalog": false,
+    "catalog": true,
     "about": false,
     "contact": false,
     "igs": true
