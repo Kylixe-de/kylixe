@@ -34,17 +34,7 @@
       "orange"
     ],
     "payment_link": "",
-    "teaser": {
-      "mode": "soon",
-      "disc": {
-        "enabled": true,
-        "percent": 15,
-        "days": 10
-      }
-    },
-    "teaser_cutout": true,
-    "coming_soon": true,
-    "soon_notify": true
+    "teaser_cutout": true
   },
   {
     "active": false,
