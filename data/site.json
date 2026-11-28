@@ -2,7 +2,12 @@
   "currency": "EUR",
   "shipping_cost": 5.9,
   "whatsapp": "",
-  "hero_images": [],
+  "hero_images": [
+    {
+      "image": "images/hero/hero-mx0l6rhf.png",
+      "position": "center"
+    }
+  ],
   "hero_seconds": 6.5,
   "hero_subtitle": {
     "en": "",
